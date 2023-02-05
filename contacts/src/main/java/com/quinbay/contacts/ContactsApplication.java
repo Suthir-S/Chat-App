@@ -1,14 +1,16 @@
-package com.quinbay.chatlogin;
+package com.quinbay.contacts;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
-public class ChatloginApplication {
+public class ContactsApplication {
+
 
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
@@ -21,8 +23,11 @@ public class ChatloginApplication {
 	}
 
 	public static void main(String[] args) {
-
-		SpringApplication.run(ChatloginApplication.class, args);
+		SpringApplication.run(ContactsApplication.class, args);
 	}
 
+	@Bean
+	public RestTemplate getRestTemplate() {
+		return new RestTemplate();
+	}
 }
