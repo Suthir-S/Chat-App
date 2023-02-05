@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -22,10 +24,10 @@ public class GroupMembers {
     Integer id;
     String userid;  //mobilenum
 
-    @ManyToOne
-    @JoinColumn(name = "group_id",referencedColumnName = "groupid")
+    @ManyToOne //(cascade = CascadeType.ALL)
+    @JoinColumn(name = "group_id", referencedColumnName = "groupid")
     @JsonIgnore
-    Groups group;
+    public Groups group;
 
     @Column(name = "group_member_id")
     int groupid;

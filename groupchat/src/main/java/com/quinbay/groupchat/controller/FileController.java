@@ -2,8 +2,7 @@ package com.quinbay.groupchat.controller;
 
 import com.quinbay.groupchat.model.File;
 import com.quinbay.groupchat.model.ResponseFile;
-import com.quinbay.groupchat.service.FileService;
-import com.sun.istack.Nullable;
+import com.quinbay.groupchat.service.FileServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,23 +14,22 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Controller
 @RestController
+@CrossOrigin(origins = "*")
 public class FileController {
 
     @Autowired
-    private FileService fileService;
+    private FileServiceImpl fileServiceImpl;
 
     @PostMapping("/sendFile")
     public String sendFile(@RequestParam("file") MultipartFile file, @RequestParam String senderid , @RequestParam int groupid){
         String message = "";
         try {
 
-            return fileService.send(file,senderid,groupid);
+            return fileServiceImpl.send(file,senderid,groupid);
         } catch (Exception e) {
             return "Could not send the file: " + file.getOriginalFilename() + "!";
         }
@@ -39,7 +37,7 @@ public class FileController {
 
     @GetMapping("/displayFiles")
     public ResponseEntity<List<ResponseFile>> getListFiles() {
-        List<ResponseFile> files = fileService.getAllFiles().map(dbFile -> {
+        List<ResponseFile> files = fileServiceImpl.getAllFiles().map(dbFile -> {
             String downloadFile = ServletUriComponentsBuilder
                     .fromCurrentContextPath()
                     .path("/displayFiles/")
@@ -58,7 +56,7 @@ public class FileController {
 
     @GetMapping("/download/{fileid}")
     public ResponseEntity<byte[]> getFile(@PathVariable String fileid) {
-            File fileDB = fileService.getFile(fileid);
+            File fileDB = fileServiceImpl.getFile(fileid);
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
                     .body(fileDB.getData());
@@ -66,12 +64,12 @@ public class FileController {
 
     @DeleteMapping("/deleteFile")
     public String deleteFile(@RequestParam String id){
-        return fileService.deleteFile(id);
+        return fileServiceImpl.deleteFile(id);
     }
 
 //    @GetMapping("/FilesByGroupid")
 //    public ResponseEntity<List<ResponseFile>> findGroupFiles(int groupid){
-//        List<ResponseFile> files = fileService.findGroupFiles(groupid).map(dbFile -> {
+//        List<ResponseFile> files = fileServiceImpl.findGroupFiles(groupid).map(dbFile -> {
 //            String fileDownloadUri = ServletUriComponentsBuilder
 //                    .fromCurrentContextPath()
 //                    .path("/displayFiles/")
