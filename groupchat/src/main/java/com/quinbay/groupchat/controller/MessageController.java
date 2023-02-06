@@ -23,10 +23,6 @@ public class MessageController {
         return messageServiceImpl.newSendMessage(newmsg);
     }
 
-//    @GetMapping("/displayPagination/{page}/{size}")
-//    public Page<Message> getSpecific(@RequestParam int groupid, @RequestParam String userid, @PathVariable int page, @PathVariable int size){
-//        return messageServiceImpl.findSpecific(groupid,userid,page,size);
-//    }
 
     @GetMapping("/displayPagination/{page}/{size}")
     public Page<MessageResponse> getSpecificpage(@RequestParam int groupid, @RequestParam String userid, @PathVariable int page, @PathVariable int size){

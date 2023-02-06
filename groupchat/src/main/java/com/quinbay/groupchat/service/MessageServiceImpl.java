@@ -36,18 +36,21 @@ public class MessageServiceImpl implements MessageService {
             List<GroupMembers> sendMessage = groupMembersRepo.findByGroupid(newmsg.getGroupId());
             int messageid=0;
             if (check != null) {
-                for (GroupMembers mems : sendMessage) {
-                    Message newaddmsg = new Message();
-                    newaddmsg.setSenderid(newmsg.getSenderId());
-                    newaddmsg.setGroupid(newmsg.getGroupId());
-                    newaddmsg.setMessagetext(newmsg.getMessageText());
-                    newaddmsg.setUserid(mems.getUserid());
-                    messageRepo.save(newaddmsg);
-                    if(mems.getUserid().equals(newmsg.getSenderId())){
-                        messageid = newaddmsg.getMessageid();
+                if (newmsg.getMessageText() != "") {
+                    for (GroupMembers mems : sendMessage) {
+                        Message newaddmsg = new Message();
+                        newaddmsg.setSenderid(newmsg.getSenderId());
+                        newaddmsg.setGroupid(newmsg.getGroupId());
+                        newaddmsg.setMessagetext(newmsg.getMessageText());
+                        newaddmsg.setUserid(mems.getUserid());
+                        messageRepo.save(newaddmsg);
+                        if (mems.getUserid().equals(newmsg.getSenderId())) {
+                            messageid = newaddmsg.getMessageid();
+                        }
                     }
+                    return "Message Sent\nMessage id :" + messageid + " ";
                 }
-                return "Message Sent\nMessage id :"+messageid+" ";
+                return "Message can't be Empty";
             }
             return "Member doesn't Exists";
         }
@@ -77,15 +80,6 @@ public class MessageServiceImpl implements MessageService {
         return response;
     }
 
-
-//    @Override
-//    public Page<Message> findSpecific(int groupid, String userid, int page, int size) {
-//        Pageable pages = PageRequest.of(page,size);
-//        Page<Message> message = messageRepo.findByGroupidAndUserid(groupid,userid,pages);
-//        return message;
-//    }
-
-    //=====
 
     @Override
     public Page<MessageResponse> findSpecificPage(int groupid, String userid, int page, int size) {

@@ -10,12 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
+@Transactional
 public class FileServiceImpl implements FileService {
 
     @Autowired
@@ -59,6 +61,7 @@ public class FileServiceImpl implements FileService {
         return fileRepo.findAll().stream();
     }
 
+    @Override
     public String deleteFile(String id) {
         Optional<File> fetch = fileRepo.findById(id);
         if (fetch.isPresent()) {
@@ -68,11 +71,10 @@ public class FileServiceImpl implements FileService {
         return "File doesn't Exists";
     }
 
-
 //    @Override
-//    public Stream<File> findGroupFiles(int groupid) {
-//        return fileRepo.findByGroupid(groupid);
-//        //return message;
-//    }
+    public Stream<File> findGroupFiles(int groupid) {
+        return fileRepo.findByGroupid(groupid).stream();
+        //return message;
+    }
 
 }

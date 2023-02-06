@@ -2,7 +2,6 @@ package com.quinbay.groupchat.controller;
 
 
 import com.quinbay.groupchat.model.*;
-//import com.quinbay.groupchat.model.Groups;
 import com.quinbay.groupchat.service.GroupServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +15,6 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class GroupController {
 
-//    @Autowired
-//    Groups group;
 
     @Autowired
     GroupServiceImpl groupServiceImpl;
@@ -32,7 +29,6 @@ public class GroupController {
     @GetMapping("/showAllGroupsData")
     public List<GroupsResponse> showAllGroups(){
         return groupServiceImpl.showAllGroups();
-        //return groupServiceImpl.showAllGroups();
     }
 
 

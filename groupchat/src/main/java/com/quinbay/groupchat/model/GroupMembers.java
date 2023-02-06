@@ -24,7 +24,7 @@ public class GroupMembers {
     Integer id;
     String userid;  //mobilenum
 
-    @ManyToOne //(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "group_id", referencedColumnName = "groupid")
     @JsonIgnore
     public Groups group;
@@ -32,3 +32,24 @@ public class GroupMembers {
     @Column(name = "group_member_id")
     int groupid;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//(cascade = CascadeType.ALL)

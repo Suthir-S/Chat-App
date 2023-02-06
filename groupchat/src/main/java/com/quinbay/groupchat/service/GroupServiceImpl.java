@@ -45,18 +45,6 @@ public class GroupServiceImpl implements GroupService {
         return groupMember;
     }
 
-//    @Override
-//    public Map<Integer,Groups> getMembers(String mobilenum) {
-//        List<GroupMembers> members = groupMembersRepo.findByUserid(mobilenum);
-//        Map<Integer,Groups> groups = new HashMap<>();
-//        for (GroupMembers g : members) {
-//            groups.put(g.getGroup().getId(),g.getGroup());
-//        }
-//        return groups;
-//    }
-
-
-    //======
 
     @Override
     public Map<Integer,GroupsResponse> getMembers(String mobilenum) {

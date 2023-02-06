@@ -11,4 +11,5 @@ public interface FileService {
     String send(MultipartFile file , String senderid , int groupid) throws IOException;
     File getFile(String id) throws NoSuchElementException;
     Stream<File> getAllFiles();
+    String deleteFile(String id);
 }
